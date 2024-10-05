@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
-from .FIS1 import FS_pt1
-from .FIS2 import FS_pt2
+from FIS1 import FS_pt1
+from FIS2 import FS_pt2
 
 ###########################################################################################################
 ###########################################################################################################
@@ -44,7 +44,7 @@ def create_outcsv():
 
 if __name__ == "__main__":
 
-    GENERATE = 0
+    GENERATE = 1
 
     # Load the CSV file into a DataFrame
     data = pd.read_csv('CINTE24-25_Proj1_SampleData.csv')
@@ -113,7 +113,7 @@ if __name__ == "__main__":
     if GENERATE == 1:
         gen_ds = []
 
-        for i in range(15000):
+        for i in range(10000):
             parameters[0] = round(np.random.rand(),2)
             parameters[1] = round(np.random.rand(),2)
             parameters[2] = round(np.random.rand(),2)
@@ -121,7 +121,7 @@ if __name__ == "__main__":
             parameters[4] = round(np.random.rand(),2)
             parameters[5] = round(np.random.rand(),2)
 
-            predicted_clp, predicted_clp1, predicted_clp2 = fuzzy_system(parameters)
+            predicted_clp, _, _ = fuzzy_system(parameters)
 
             gen_ds.append({
                 'OutNetThroughput': parameters[0],
@@ -135,4 +135,4 @@ if __name__ == "__main__":
 
         data_set = pd.DataFrame(gen_ds)
 
-        data_set.to_csv('generated_data_set.csv', index=False)
+        data_set.to_csv('generated_data_set_10000.csv', index=False)

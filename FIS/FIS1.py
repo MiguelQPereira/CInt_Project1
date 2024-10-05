@@ -37,10 +37,10 @@ def FS_pt1(net_output, bandwidth, latency):
     S3_3 = sf.FuzzySet(points=[[0, 0], [0.70, 0], [0.8, 1.], [1, 1.]], term="high_latency")
     FS1.add_linguistic_variable("LATENCY", sf.LinguisticVariable([S3_1, S3_2, S3_3]))
 
-    FS1.produce_figure(outputfile="memberships_FS1.png", element_dict={
-        "NET_OUTPUT": None, 
-        "BANDWIDTH": None,
-        "LATENCY": None})
+    #FS1.produce_figure(outputfile="memberships_FS1.png", element_dict={
+    #    "NET_OUTPUT": None, 
+    #    "BANDWIDTH": None,
+    #    "LATENCY": None})
 
     # Output
 
