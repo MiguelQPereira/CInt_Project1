@@ -46,6 +46,11 @@ def FS_pt2 (cpu_load, mem_use, net_input):
     S3_3 = sf.FuzzySet(points=[[0.70, 0], [0.85, 1.], [1, 1.]], term="high_input")
     FS1.add_linguistic_variable("NET_INPUT", sf.LinguisticVariable([S3_1, S3_2, S3_3]))
 
+    FS1.produce_figure(outputfile="memberships_FS2.png", element_dict={
+        "NET_INPUT": None, 
+        "CPU_LOAD": None,
+        "MEM_USE": None})
+
     with HiddenPrints():
         FS1.set_output_function("LOWER_CLP", "-1*(0.6*MEM_USE*NET_INPUT+0.5*CPU_LOAD)")
         FS1.set_output_function("MAINTAIN_CLP", "(0.3*CPU_LOAD+0.25*(MEM_USE*NET_INPUT))")

@@ -2,6 +2,7 @@ import simpful as sf
 import sys
 import os
 
+
 class HiddenPrints:
     def __enter__(self):
         self._original_stdout = sys.stdout  # Save a reference to the original standard output
@@ -35,6 +36,11 @@ def FS_pt1(net_output, bandwidth, latency):
     S3_2 = sf.FuzzySet(points=[[0, 0], [0.3, 0], [0.45, 1.], [0.55, 1.], [0.7, 0], [1., 0]], term="medium_latency")
     S3_3 = sf.FuzzySet(points=[[0, 0], [0.50, 0], [0.65, 1.], [1, 1.]], term="high_latency")
     FS1.add_linguistic_variable("LATENCY", sf.LinguisticVariable([S3_1, S3_2, S3_3]))
+
+    FS1.produce_figure(outputfile="memberships_FS1.png", element_dict={
+        "NET_OUTPUT": None, 
+        "BANDWIDTH": None,
+        "LATENCY": None})
 
     # Output
 
