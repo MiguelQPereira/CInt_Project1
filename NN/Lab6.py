@@ -7,14 +7,10 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, confusion_matrix, classification_report
 from sklearn.model_selection import GridSearchCV
 
-columns_haberman = ['Age', 'Year of Operation', 'Positive Nodes', 'Survivability']
-columns_iris = ['sepal length (cm)', 'sepal width (cm)', 'petal length (cm)', 'petal width (cm)', 'class']
+df = pd.read_csv('../FIS/generated_data_set.csv')
 
-iris = pd.read_csv('iris/iris.data', names=columns_iris)
-haberman = pd.read_csv('haberman/haberman.data', names=columns_haberman)
-
-x = iris.drop(columns=['class'])
-y = iris['class']
+x = df.drop(columns=['Expected_CLP'])
+y = df['Expected_CLP']
 
 #separating data into train, validation and test
 x_train_val, x_test, y_train_val, y_test = train_test_split(x, y, test_size=0.2, random_state=69420)

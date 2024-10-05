@@ -22,7 +22,7 @@ def FS_pt1(net_output, bandwidth, latency):
     # Output network throughtput
     S1_1 = sf.FuzzySet(points=[[0, 1.], [0.30, 1.], [0.50, 0], [1., 0]], term="low_output")
     S1_2 = sf.FuzzySet(points=[[0, 0], [0.2, 0], [0.40, 1.], [0.65, 1.], [0.75, 0], [1., 0]], term="medium_output")
-    S1_3 = sf.FuzzySet(points=[[0, 0], [0.50, 0], [0.90, 1.], [1, 1.]], term="high_output")
+    S1_3 = sf.FuzzySet(points=[[0, 0], [0.70, 0], [0.90, 1.], [1, 1.]], term="high_output")
     FS1.add_linguistic_variable("NET_OUTPUT", sf.LinguisticVariable([S1_1, S1_2, S1_3]))
 
     # Avalable output bandwidth
@@ -34,7 +34,7 @@ def FS_pt1(net_output, bandwidth, latency):
     # Latency
     S3_1 = sf.FuzzySet(points=[[0, 1.], [0.40, 1.], [0.50, 0], [1., 0]], term="low_latency")
     S3_2 = sf.FuzzySet(points=[[0, 0], [0.3, 0], [0.45, 1.], [0.55, 1.], [0.7, 0], [1., 0]], term="medium_latency")
-    S3_3 = sf.FuzzySet(points=[[0, 0], [0.50, 0], [0.65, 1.], [1, 1.]], term="high_latency")
+    S3_3 = sf.FuzzySet(points=[[0, 0], [0.70, 0], [0.8, 1.], [1, 1.]], term="high_latency")
     FS1.add_linguistic_variable("LATENCY", sf.LinguisticVariable([S3_1, S3_2, S3_3]))
 
     FS1.produce_figure(outputfile="memberships_FS1.png", element_dict={

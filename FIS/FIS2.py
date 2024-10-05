@@ -41,8 +41,8 @@ def FS_pt2 (cpu_load, mem_use, net_input):
     FS1.add_linguistic_variable("MEM_USE", sf.LinguisticVariable([S2_1, S2_2, S2_3]))
 
     # INPUT NET
-    S3_1 = sf.FuzzySet(points=[[0, 1.], [0.40, 1.], [0.50, 0]], term="low_input")
-    S3_2 = sf.FuzzySet(points=[[0.35, 0], [0.45, 1.], [0.70, 1.], [0.80, 0]], term="medium_input")
+    S3_1 = sf.FuzzySet(points=[[0, 1.], [0.20, 1.], [0.40, 0]], term="low_input")
+    S3_2 = sf.FuzzySet(points=[[0.3, 0], [0.45, 1.], [0.55, 1.], [0.80, 0]], term="medium_input")
     S3_3 = sf.FuzzySet(points=[[0.70, 0], [0.85, 1.], [1, 1.]], term="high_input")
     FS1.add_linguistic_variable("NET_INPUT", sf.LinguisticVariable([S3_1, S3_2, S3_3]))
 
@@ -52,9 +52,9 @@ def FS_pt2 (cpu_load, mem_use, net_input):
         "MEM_USE": None})
 
     with HiddenPrints():
-        FS1.set_output_function("LOWER_CLP", "-1*(0.6*MEM_USE*NET_INPUT+0.5*CPU_LOAD)")
-        FS1.set_output_function("MAINTAIN_CLP", "(0.3*CPU_LOAD+0.25*(MEM_USE*NET_INPUT))")
-        FS1.set_output_function("INCREASE_CLP", "1-(0.7*MEM_USE*NET_INPUT+0.3*CPU_LOAD)")
+        FS1.set_output_function("LOWER_CLP", "-1*(0.7*MEM_USE*NET_INPUT+0.5*CPU_LOAD)")
+        FS1.set_output_function("MAINTAIN_CLP", "(1.0*CPU_LOAD/0.25*(MEM_USE*NET_INPUT))")
+        FS1.set_output_function("INCREASE_CLP", "1-(0.1*MEM_USE*NET_INPUT+0.3*CPU_LOAD)")
 
     #FS1.set_output_function("LOWER_CLP", "max(-1, min(1, (-1 + (-2 * (CPU_LOAD**2 + MEM_USE**2)) - 1.5 * NET_INPUT)))")
 
