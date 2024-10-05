@@ -1,7 +1,10 @@
+import joblib
 import pandas as pd
 import numpy as np
 import simpful as sf
 import argparse
+
+from sklearn.model_selection import train_test_split
 
 from FIS.FuzzyInferenceSystem import fuzzy_system  # Import the fuzzy_system function
 
@@ -29,11 +32,19 @@ output_file = 'TestResult.csv'
 data = pd.read_csv(input_file)
 
 # Load the pre-trained neural network model
-# ....
+mlp = joblib.load('NN/mlp_model.pkl')
+
 
 # Creates a DataFrame to store the results
 results = pd.DataFrame(columns=["CLP_FIS", "CLP_NN"])
 
+x = data.drop(columns=['CLPVariation'])
+y = data['CLPVariation']
+#separate data into train, validation and test
+x_train_val, x_test, y_train_val, y_test = train_test_split(x, y, test_size=0.2, random_state=69420)
+x_train, x_val, y_train, y_val = train_test_split(x_train_val, y_train_val, test_size=0.3, random_state=69420)
+
+y_test_pred = mlp.predict(x_test)
 
 for index, row in data.iterrows():
     # Get the parameters for FIS
