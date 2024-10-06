@@ -44,7 +44,7 @@ def create_outcsv():
 
 if __name__ == "__main__":
 
-    GENERATE = 1
+    GENERATE = 0
 
     # Load the CSV file into a DataFrame
     data = pd.read_csv('CINTE24-25_Proj1_SampleData.csv')

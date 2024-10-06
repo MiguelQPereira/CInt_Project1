@@ -45,9 +45,12 @@ def FS_pt1(net_output, bandwidth, latency):
     # Output
 
     with HiddenPrints():
-        FS1.set_output_function("LOWER_CLP", "max(-1, min(1, -1 * (0.7 * LATENCY + 0.5 * NET_OUTPUT * BANDWIDTH)))")
-        FS1.set_output_function("MAINTAIN_CLP", "max(-1, min(1, (0.7 * LATENCY + 0.4 * NET_OUTPUT + 0.3 * BANDWIDTH)))")
-        FS1.set_output_function("INCREASE_CLP", "max(-1, min(1, 1 - ((0.5 * LATENCY + 0.3 * NET_OUTPUT * BANDWIDTH) / 3)))")
+        FS1.set_output_function("LOWER_CLP", "-1*(0.7*LATENCY*NET_OUTPUT+0.5*BANDWIDTH)")
+        FS1.set_output_function("MAINTAIN_CLP", "(1.0*BANDWIDTH/0.25*(LATENCY*NET_OUTPUT))")
+        FS1.set_output_function("INCREASE_CLP", "1-(0.1*LATENCY*NET_OUTPUT+0.3*BANDWIDTH)")
+        #FS1.set_output_function("LOWER_CLP", "max(-1, min(1, -1 * (0.7 * LATENCY + 0.5 * NET_OUTPUT * BANDWIDTH)))")
+        #FS1.set_output_function("MAINTAIN_CLP", "max(-1, min(1, (0.7 * LATENCY + 0.4 * NET_OUTPUT + 0.3 * BANDWIDTH)))")
+        #FS1.set_output_function("INCREASE_CLP", "max(-1, min(1, 1 - ((0.5 * LATENCY + 0.3 * NET_OUTPUT * BANDWIDTH) / 3)))")
 
     # Rules:
 

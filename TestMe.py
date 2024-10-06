@@ -3,10 +3,23 @@ import pandas as pd
 import numpy as np
 import simpful as sf
 import argparse
-
-from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, mean_absolute_error
 
 from FIS.FuzzyInferenceSystem import fuzzy_system  # Import the fuzzy_system function
+
+##############################################################################################
+##############################################################################################
+
+def map_to_class(y_pred):
+    if y_pred <= -0.15:
+        return 'Decrease'
+    elif y_pred >= 0.15:
+        return 'Increase'
+    else:
+        return 'Maintain'
+
+##############################################################################################
+##############################################################################################
 
 # Create the argument parser
 parser = argparse.ArgumentParser(description="TestMe script to process a CSV file")
@@ -36,15 +49,13 @@ mlp = joblib.load('NN/mlp_model.pkl')
 
 
 # Creates a DataFrame to store the results
-results = pd.DataFrame(columns=["CLP_FIS", "CLP_NN"])
+results = pd.DataFrame(columns=["FIS", "NNRegressor", "NNClassifier", "Mean Absolute Error", "Mean Squared Error"])
 
-x = data.drop(columns=['CLPVariation'])
+x = data.drop(columns=['CLPVariation', 'V_Latency', 'V_OutNetThroughput', 'V_InpNetThroughput', 'V_ProcessorLoad', 'MemoryUsage', 'OutBandwidth'],)
+x = x[['OutNetThroughput', 'V_OutBandwidth', 'Latency', 'ProcessorLoad', 'V_MemoryUsage', 'InpNetThroughput']]
 y = data['CLPVariation']
-#separate data into train, validation and test
-x_train_val, x_test, y_train_val, y_test = train_test_split(x, y, test_size=0.2, random_state=69420)
-x_train, x_val, y_train, y_val = train_test_split(x_train_val, y_train_val, test_size=0.3, random_state=69420)
 
-y_test_pred = mlp.predict(x_test)
+y_pred = mlp.predict(x)
 
 for index, row in data.iterrows():
     # Get the parameters for FIS
@@ -59,13 +70,16 @@ for index, row in data.iterrows():
 
     # Append the results to the DataFrame
     new_data = pd.DataFrame({
-        "CLP_FIS": [result_fis],
-        "CLP_NN": [result_fis]
+        "FIS": [result_fis],
+        "NNRegressor": [y_pred[index]],
+        "NNClassifier": [map_to_class(y_pred[index])]
     })
 
     # Concatenate the new data with the existing results DataFrame
     results = pd.concat([results, new_data], ignore_index=True)
 
 # Save the results to a CSV file
+results.loc[0, "Mean Absolute Error"] = mean_absolute_error(y, y_pred)
+results.loc[0, "Mean Squared Error"] = mean_squared_error(y, y_pred)
 results.to_csv(output_file, index=False)
 print(f"Results saved to {output_file}")

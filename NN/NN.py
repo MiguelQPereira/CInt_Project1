@@ -5,15 +5,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, confu
 from sklearn.model_selection import GridSearchCV
 import joblib
 
-def map_to_class(y_pred):
-    if y_pred <= -0.3:
-        return 'Decrease'
-    elif y_pred >= 0.3:
-        return 'Increase'
-    else:
-        return 'Maintain'
-
-df = pd.read_csv('../FIS/generated_data_set.csv')
+df = pd.read_csv('../FIS/generated_data_set_10000.csv')
 
 x = df.drop(columns=['Expected_CLP'])
 y = df['Expected_CLP']
@@ -23,7 +15,7 @@ x_train_val, x_test, y_train_val, y_test = train_test_split(x, y, test_size=0.2,
 x_train, x_val, y_train, y_val = train_test_split(x_train_val, y_train_val, test_size=0.3, random_state=69420)
 
 #make a MLP regressor and use gride search with 5 cv to find best hyperparameters
-best_mlp = MLPRegressor(random_state=69420, max_iter = 5000, hidden_layer_sizes=10, activation='tanh', solver='lbfgs', alpha=1e-5)
+best_mlp = MLPRegressor(random_state=69420, max_iter = 15000, hidden_layer_sizes=(10,10), activation='tanh', solver='lbfgs', alpha=1e-5)
 #grid_search = GridSearchCV(mlp, { 'hidden_layer_sizes': [10], 'activation': ['logistic'], 'solver': ['sgd'], 'alpha': [0.00001, 0.001, 0.01]}, cv=5)
 
 #train the model

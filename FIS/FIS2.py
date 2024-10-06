@@ -52,15 +52,13 @@ def FS_pt2 (cpu_load, mem_use, net_input):
     #    "MEM_USE": None})
 
     with HiddenPrints():
-        FS1.set_output_function("LOWER_CLP", "-1*(0.7*MEM_USE*NET_INPUT+0.5*CPU_LOAD)")
-        FS1.set_output_function("MAINTAIN_CLP", "(1.0*CPU_LOAD/0.25*(MEM_USE*NET_INPUT))")
+        FS1.set_output_function("LOWER_CLP", "-1*(0.7*MEM_USE-NET_INPUT+0.5+CPU_LOAD**2)")
+        FS1.set_output_function("MAINTAIN_CLP", "(CPU_LOAD/0.25*(MEM_USE*NET_INPUT))")
         FS1.set_output_function("INCREASE_CLP", "1-(0.1*MEM_USE*NET_INPUT+0.3*CPU_LOAD)")
+        #S1.set_output_function("LOWER_CLP", "max(-1, min(1, (-1 + (-2 * (CPU_LOAD**2 + MEM_USE**2)) - 1.5 * NET_INPUT)))")
+        #FS1.set_output_function("MAINTAIN_CLP", "max(-1, min(1, (0 - (CPU_LOAD**2 + MEM_USE**2) - 0.5 * NET_INPUT)))")
+        #FS1.set_output_function("INCREASE_CLP", "max(-1, min(1, (1 - 2 * (CPU_LOAD**2 + MEM_USE**2) - 1 * NET_INPUT)))")
 
-    #FS1.set_output_function("LOWER_CLP", "max(-1, min(1, (-1 + (-2 * (CPU_LOAD**2 + MEM_USE**2)) - 1.5 * NET_INPUT)))")
-
-    #FS1.set_output_function("MAINTAIN_CLP", "max(-1, min(1, (0 - (CPU_LOAD**2 + MEM_USE**2) - 0.5 * NET_INPUT)))")
-
-    #FS1.set_output_function("INCREASE_CLP", "max(-1, min(1, (1 - 2 * (CPU_LOAD**2 + MEM_USE**2) - 1 * NET_INPUT)))")
 
     ##low input
     #low load
